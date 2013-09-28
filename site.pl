@@ -1,4 +1,6 @@
 {
+    hostname_prefix => 'freifunk',
+
     wifi24 => {
 	ssid => 'luebeck.freifunk.net',
 	channel => 1,
