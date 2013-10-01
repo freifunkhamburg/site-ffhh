@@ -8,6 +8,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-autoupdater \
 	htop \
 	iputils-ping6 \
+	iwinfo \
 	iptables \
 	kmod-ipt-nathelper \
 	firewall \
