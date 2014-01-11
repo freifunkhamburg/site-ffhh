@@ -8,6 +8,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-mesh-batman-adv \
 	gluon-mesh-vpn-fastd \
 	gluon-autoupdater \
+	gluon-radvd \
 	htop \
 	iputils-ping6 \
 	iwinfo \
