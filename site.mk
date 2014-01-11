@@ -10,7 +10,6 @@ GLUON_SITE_PACKAGES := \
 	gluon-autoupdater \
 	gluon-radvd \
 	htop \
-	iputils-ping6 \
 	iwinfo \
 	iptables \
 	kmod-ipt-nathelper \
