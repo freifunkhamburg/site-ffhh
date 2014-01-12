@@ -1,4 +1,5 @@
 GLUON_SITE_PACKAGES := \
+	gluon-alfred \
 	gluon-config-mode \
 	gluon-ebtables-filter-multicast \
 	gluon-ebtables-filter-ra-dhcp \
