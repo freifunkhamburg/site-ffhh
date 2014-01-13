@@ -13,6 +13,4 @@ GLUON_SITE_PACKAGES := \
 	htop \
 	iwinfo \
 	iptables \
-	kmod-ipt-nathelper \
-	firewall \
 	haveged
