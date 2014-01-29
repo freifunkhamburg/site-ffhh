@@ -8,6 +8,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-next-node \
 	gluon-mesh-batman-adv \
 	gluon-mesh-vpn-fastd \
+	gluon-status-page \
 	gluon-autoupdater \
 	gluon-radvd \
 	htop \
