@@ -11,7 +11,6 @@ GLUON_SITE_PACKAGES := \
 	gluon-status-page \
 	gluon-autoupdater \
 	gluon-radvd \
-	htop \
 	iwinfo \
 	iptables \
 	haveged
