@@ -15,3 +15,9 @@ GLUON_SITE_PACKAGES := \
 	iwinfo \
 	iptables \
 	haveged
+
+
+DEFAULT_GLUON_RELEASE := 0.4+0-exp$(shell date '+%Y%m%d')
+
+# Allow overriding the release number from the command line
+GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
