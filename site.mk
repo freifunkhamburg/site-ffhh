@@ -1,7 +1,7 @@
 GLUON_SITE_PACKAGES := \
 	gluon-alfred \
 	gluon-autoupdater \
-	gluon-config-mode \
+	ffhh-config-mode \
 	gluon-ebtables-filter-multicast \
 	gluon-ebtables-filter-ra-dhcp \
 	gluon-firewall \
