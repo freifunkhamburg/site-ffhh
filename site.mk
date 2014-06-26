@@ -6,7 +6,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-ebtables-filter-ra-dhcp \
 	gluon-firewall \
 	gluon-legacy \
-	gluon-luci-admin \
+	ffhh-luci-admin \
 	gluon-luci-autoupdater \
 	gluon-next-node \
 	gluon-mesh-batman-adv \
