@@ -1,4 +1,15 @@
-Gluon versions used for specific Hamburg Freifunk Firmware builds:
+#### How to build the Freifunk Hamburg Firmware
+    
+    git clone git://github.com/freifunk-gluon/gluon.git            # Get the official Gluon repository
+    cd gluon
+    git clone git://github.com/freifunkhamburg/site-ffhh.git site  # Get the Freifunk Hamburg site repository
+    make update                                                    # Get other repositories used by Gluon
+    make                                                           # Build Gluon
+
+Please see [the official Gluon repository](https://github.com/freifunk-gluon/gluon) for an in-depth explanation of the build process.
+
+
+#### Gluon versions used for specific Hamburg Freifunk Firmware builds
 
 - 0.4.2: v2014.2
  - note: no gluon fork used anymore
