@@ -1,5 +1,6 @@
 GLUON_SITE_PACKAGES := \
 	gluon-alfred \
+	gluon-ath9k-workaround \
 	gluon-autoupdater \
 	gluon-config-mode-ffhh \
 	gluon-ebtables-filter-multicast \
