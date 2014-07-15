@@ -5,7 +5,6 @@ GLUON_SITE_PACKAGES := \
 	gluon-config-mode-ffhh \
 	gluon-ebtables-filter-multicast \
 	gluon-ebtables-filter-ra-dhcp \
-	gluon-firewall \
 	gluon-legacy \
 	gluon-luci-admin \
 	gluon-luci-autoupdater \
