@@ -1,6 +1,7 @@
 GLUON_SITE_PACKAGES := \
 	gluon-alfred \
 	gluon-ath9k-workaround \
+	gluon-announced \
 	gluon-autoupdater \
 	gluon-config-mode-ffhh \
 	gluon-ebtables-filter-multicast \
@@ -8,6 +9,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-legacy \
 	gluon-luci-admin \
 	gluon-luci-autoupdater \
+	gluon-luci-portconfig \
 	gluon-next-node \
 	gluon-mesh-batman-adv \
 	gluon-mesh-vpn-fastd \
