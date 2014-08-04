@@ -1,6 +1,5 @@
 GLUON_SITE_PACKAGES := \
 	gluon-alfred \
-	gluon-ath9k-workaround \
 	gluon-announced \
 	gluon-autoupdater \
 	gluon-config-mode-ffhh \
