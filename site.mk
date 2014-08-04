@@ -20,7 +20,7 @@ GLUON_SITE_PACKAGES := \
 	haveged
 
 
-DEFAULT_GLUON_RELEASE := 0.4.2+0-exp$(shell date '+%Y%m%d')
+DEFAULT_GLUON_RELEASE := 0.5
 
 # Allow overriding the release number from the command line
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)

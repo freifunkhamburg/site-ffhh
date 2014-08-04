@@ -11,6 +11,7 @@ Please see [the official Gluon repository](https://github.com/freifunk-gluon/glu
 
 #### Gluon versions used for specific Hamburg Freifunk Firmware builds
 
+- 0.5: v2014.3
 - 0.4.2: v2014.2
  - note: no gluon fork used anymore
 - 0.4.1: v2014.2-hh
