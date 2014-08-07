@@ -2,7 +2,9 @@ GLUON_SITE_PACKAGES := \
 	gluon-alfred \
 	gluon-announced \
 	gluon-autoupdater \
-	gluon-config-mode-ffhh \
+	gluon-config-mode-autoupdater \
+	gluon-config-mode-hostname \
+	gluon-config-mode-mesh-vpn \
 	gluon-ebtables-filter-multicast \
 	gluon-ebtables-filter-ra-dhcp \
 	gluon-legacy \
@@ -19,7 +21,7 @@ GLUON_SITE_PACKAGES := \
 	haveged
 
 
-DEFAULT_GLUON_RELEASE := 0.5
+DEFAULT_GLUON_RELEASE := 0.6~exp$(shell date '+%Y%m%d')
 
 # Allow overriding the release number from the command line
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
