@@ -5,6 +5,7 @@ GLUON_SITE_PACKAGES := \
 	gluon-config-mode-autoupdater \
 	gluon-config-mode-hostname \
 	gluon-config-mode-mesh-vpn \
+	gluon-config-mode-reboot-ffhh \
 	gluon-ebtables-filter-multicast \
 	gluon-ebtables-filter-ra-dhcp \
 	gluon-legacy \
