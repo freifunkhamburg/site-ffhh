@@ -1,8 +1,8 @@
 #### How to build the Freifunk Hamburg Firmware
     
-    git clone git://github.com/freifunk-gluon/gluon.git            # Get the official Gluon repository
+    git clone https://github.com/freifunk-gluon/gluon.git            # Get the official Gluon repository
     cd gluon
-    git clone git://github.com/freifunkhamburg/site-ffhh.git site  # Get the Freifunk Hamburg site repository
+    git clone https://github.com/freifunkhamburg/site-ffhh.git site  # Get the Freifunk Hamburg site repository
     make update                                                    # Get other repositories used by Gluon
     make                                                           # Build Gluon
 
