@@ -1,4 +1,5 @@
 GLUON_SITE_FEEDS='ffhh_packages'
 
 PACKAGES_FFHH_PACKAGES_REPO=git://github.com/freifunkhamburg/ffhh-packages.git
-PACKAGES_FFHH_PACKAGES_COMMIT=0a70ceb1c636a5a21ce47e39513031e3794daea2
+PACKAGES_FFHH_PACKAGES_COMMIT=58a026ad0dbea4bd2727ce30a410bd9c6fdbaaa7
+
