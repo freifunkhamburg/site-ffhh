@@ -21,7 +21,6 @@ GLUON_SITE_PACKAGES := \
 	gluon-respondd \
 	gluon-setup-mode \
 	gluon-status-page \
-	fastd-traffic-status \
 	iwinfo \
 	iptables \
 	haveged
