@@ -25,3 +25,10 @@ Please see [the official Gluon repository](https://github.com/freifunk-gluon/glu
  - equal to official gluon v2014.2 + ffhh specific patches
 - 0.4a: v2014.1a
  - equal to official gluon v2014.1 + ffhh specific patches
+
+#### Access to the Statuspage
+
+To access the statuspage of the node you are connected to at the moment, you can use one of the links:
+
+- IP4: http://10.112.0.1/
+- IP6: http://[2a03:2267::1]
