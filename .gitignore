@@ -1,4 +1,4 @@
 *~
-site.conf
-site.mk
-modules
+/site.conf
+/site.mk
+/modules
