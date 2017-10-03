@@ -1,0 +1,130 @@
+{
+	hostname_prefix = 'GibMirEinenNamen',
+	site_name = '<%= site_name %>',
+	site_code = '<%= site_code %>',
+
+	opkg = {
+		openwrt = 'http://opkg.services.ffhh/%n/%v/%S/packages',
+		extra = {
+			modules = 'http://updates.hamburg.freifunk.net/%GS/stable/archive/modules/gluon-%GS-%GR/%S',
+		},
+	},
+
+	prefix4 = '<%= prefix4 %>',
+	prefix6 = '<%= prefix6 %>',
+
+	timezone = 'CET-1CEST,M3.5.0,M10.5.0/3', -- Europe/Berlin
+	ntp_servers = {'1.ntp.services.ffhh','2.ntp.services.ffhh'},
+	regdom = 'DE',
+
+	wifi24 = {
+		channel = 1,
+
+		supported_rates = {6000, 9000, 12000, 18000, 24000, 36000, 48000, 54000},
+		basic_rate = {6000, 9000, 18000, 36000, 54000},
+
+		ap = {
+			ssid = 'hamburg.freifunk.net',
+		},
+<% if gluon_ath10k_mesh == "11s" -%>
+		mesh = {
+			id = '6668682D73756564',
+			mcast_rate = 12000,
+		},
+<% else -%>
+		ibss = {
+			ssid = 'f8:d1:11:87:52:2e',
+			bssid = 'f8:d1:11:87:52:2e',
+			mcast_rate = 12000,
+		},
+<% end -%>
+	},
+
+	wifi5 = {
+		channel = 44,
+		ap = {
+			ssid = 'hamburg.freifunk.net',
+		},
+<% if gluon_ath10k_mesh == "11s" -%>
+		mesh = {
+			id = '6668682D73756564',
+			mcast_rate = 12000,
+		},
+<% else -%>
+		ibss = {
+			ssid = 'f8:d1:11:87:52:2e',
+			bssid = 'f8:d1:11:87:52:2e',
+			mcast_rate = 12000,
+		},
+<% end -%>
+	},
+
+	next_node = {
+		ip4 = '<%= next_node_ipv4 %>',
+		ip6 = '<%= next_node_ipv6 %>',
+
+		mac = '16:41:95:40:f7:dc',
+	},
+
+	fastd_mesh_vpn = {
+		enabled = true,
+		methods = {'salsa2012+umac'},
+		mtu = <%= mtu %>,
+		groups = {
+			backbone = {
+				limit = 1,
+				peers = {
+<% gateways.each_pair do | name, gw_data | -%>
+					<%= name %> = {
+						key = '<%= gw_data['key'] %>',
+						remotes = { '<%= gw_data['remotes'].join("', '") %>' },
+					},
+<% end -%>
+				},
+			},
+		},
+		bandwidth_limit = {
+			enabled = false,
+			ingress = 8096,
+			egress = 1024,
+		},
+	},
+
+	autoupdater = {
+		branch = '<%= gluon_branch %>',
+		branches = {
+			stable = {
+				name = 'stable',
+				mirrors = {'http://1.updates.services.ffhh/<%= site_code %>/stable/sysupgrade','http://2.updates.services.ffhh/<%= site_code %>/stable/sysupgrade'},
+				good_signatures = 2,
+				pubkeys = {
+<% signing_keys.each do | key | -%>
+					'<%= key %>',
+<% end -%>
+				},
+			},
+			beta = {
+				name = 'beta',
+				mirrors = {'http://1.updates.services.ffhh/<%= site_code %>/beta/sysupgrade','http://2.updates.services.ffhh/<%= site_code %>/beta/sysupgrade'},
+				good_signatures = 2,
+				pubkeys = {
+<% signing_keys.each do | key | -%>
+					'<%= key %>',
+<% end -%>
+				},
+			},
+			experimental = {
+				name = 'experimental',
+				mirrors = {'http://1.updates.services.ffhh/<%= site_code %>/experimental/sysupgrade','http://2.updates.services.ffhh/<%= site_code %>/experimental/sysupgrade'},
+				good_signatures = 1,
+				pubkeys = {
+<% signing_keys_experimental.each do | key | -%>
+					'<%= key %>',
+<% end -%>
+				},
+			},
+		},
+	},
+
+	poe_passthrough = false,
+}

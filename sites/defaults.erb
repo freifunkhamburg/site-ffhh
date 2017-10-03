@@ -1,0 +1,46 @@
+<%
+#gluon_release = "0.8.4+exp" + Time.new.strftime("%Y%m%d")
+gluon_release = "0.8.4"
+gluon_branch = "stable"
+
+gluon_site_packages = %w(
+	gluon-autoupdater
+	gluon-config-mode-autoupdater
+	gluon-config-mode-core
+	gluon-config-mode-hostname
+	gluon-config-mode-mesh-vpn
+	gluon-config-mode-reboot-ffhh
+	gluon-ebtables-filter-multicast
+	gluon-ebtables-filter-ra-dhcp
+	gluon-ebtables-segment-mld
+	gluon-luci-admin
+	gluon-luci-autoupdater
+	gluon-luci-portconfig
+	gluon-luci-private-wifi
+	gluon-luci-wifi-config
+	gluon-next-node
+	gluon-mesh-vpn-fastd
+	gluon-radvd
+	gluon-respondd
+	gluon-setup-mode
+	gluon-status-page
+	iwinfo
+	iptables
+	haveged
+)
+
+gluon_ath10k_mesh = "11s"
+
+signing_keys = [
+		'417ef22f886539ddbcffbad35e9f493195ca53e05f75bd8d8011a4999498b589', # baldo
+		'ef73bc52b929fd11efce9a5c8f0b5463f1766bb995c8a0b3b6bcd7ba45b8b1e6', # leo
+		'3f0fc50d4e5c893f9f58f98874bd21080b93c28ff5e4d4946352cada1b4e6441', # andre
+		'1d37eacbd70f72730b1f5aba246a6a8eab100e2d45dda0163d9ad827f70f88d4', # gernot
+		'bd5a70d4c3df30eaa860d615c0e0526b0dda5bc60c09c20972bce4ffa7512659', # bjoern
+		'd9992853c0fe1a2e983cc222b6bd26e70d4fb2a53862ac099144e9e8142238d0', # daniel
+]
+signing_keys_experimental = [
+		'1a0112fe489860068480c611c5dc56196c2f1a645db651ea2ed19ae0f0e8e1d1', # 1.builder
+]
+
+-%>
