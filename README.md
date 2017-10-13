@@ -4,10 +4,10 @@
     cd gluon
     git clone https://github.com/freifunkhamburg/site-ffhh.git site  # Get the Freifunk Hamburg site repository
     cd site
-    make SITE=ffhh
+    make
     cd ..
-    make update                                                    # Get other repositories used by Gluon
-    make                                                           # Build Gluon
+    make update                                                      # Get other repositories used by Gluon
+    make GLUON_SITEDIR=site/sites/ffhh                               # Build Gluon
 
 Please see [the official Gluon repository](https://github.com/freifunk-gluon/gluon) for an in-depth explanation of the build process.
 
