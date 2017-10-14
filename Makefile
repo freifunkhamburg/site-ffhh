@@ -1,13 +1,21 @@
-sites: sites/ffhh sites/ffhh-sued
+sites: clean info sites/ffhh sites/ffhh-sued
+
+info: config/defaults.erb template/info.erb
+	erb -T- config/defaults.erb template/$@.erb >$@
+
+.PHONY: clean
+clean:
+	rm -rf sites
+	rm -f info
 
 sites/%: config/%.erb
 	mkdir -p $@
 	cd $@ && $(MAKE) -f ../../Makefile site SITE=$(@F)
 
-site: clean site.mk site.conf modules
+site: siteclean site.mk site.conf modules
 
-.PHONY: clean
-clean:
+.PHONY: siteclean
+siteclean:
 	rm -f site.mk site.conf modules
 
 modules:
