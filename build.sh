@@ -5,10 +5,12 @@ function announce () {
 }
 
 proc=$(nproc)
+gluon_out="${HOME}/firmware"
 
 while getopts g:bj:v opt; do
 	case "$opt" in
 		g) gluon_path="$OPTARG" ;;
+		o) gluon_out="$OPTARG" ;;
 		b) export BROKEN=1 ;;
 		j) proc="$OPTARG" ;;
 		v) verbose=V=s ;;
@@ -16,13 +18,16 @@ while getopts g:bj:v opt; do
 done
 if [ -z "${gluon_path}" ]; then
 	echo "Usage: $0 -g GLUON_PATH" >&2
-	echo "       GLUON_PATH      Path to a checkout of the gluon repository." >&2
+	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
+	echo "       -o OUT_PATH     Path to a checkout of the gluon repository." >&2
 	echo "       -b              BROKEN=1" >&2
+	echo "       -v              verbose" >&2
 	echo "       -j JOBS         Run build with -jJOBS. Default: ${proc}" >&2
 	exit 1
 fi
 
 gluon_path=$(realpath $gluon_path)
+gluon_out=$(realpath $gluon_out)
 site_path=$(realpath $(dirname $BASH_SOURCE))
 
 announce GLUON: $gluon_path >&2
@@ -46,7 +51,7 @@ pushd "${gluon_path}" >/dev/null
 announce Starting make update...
 for s in $sites; do
 	export GLUON_SITEDIR="${site_path}/sites/${s}"
-	export GLUON_OUTPUTDIR="${HOME}/firmware/${s}/${GLUON_BRANCH}/${GLUON_RELEASE}"
+	export GLUON_OUTPUTDIR="${gluon_out}/${s}/${GLUON_BRANCH}/${GLUON_RELEASE}"
 	export GLUON_IMAGEDIR="${GLUON_OUTPUTDIR}/images"
 	export GLUON_MODULEDIR="${GLUON_OUTPUTDIR}/modules"
 	rm -rf "${GLUON_OUTPUTDIR}"
