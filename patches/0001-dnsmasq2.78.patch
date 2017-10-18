@@ -1,0 +1,236 @@
+diff -Naur a/openwrt/package/network/services/dnsmasq/Makefile b/openwrt/package/network/services/dnsmasq/Makefile
+--- a/openwrt/package/network/services/dnsmasq/Makefile	2017-10-18 22:57:32.713534131 +0200
++++ b/openwrt/package/network/services/dnsmasq/Makefile	2017-10-18 22:58:50.228018635 +0200
+@@ -8,12 +8,12 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=dnsmasq
+-PKG_VERSION:=2.73
++PKG_VERSION:=2.78
+ PKG_RELEASE:=1
+ 
+ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+ PKG_SOURCE_URL:=http://thekelleys.org.uk/dnsmasq
+-PKG_MD5SUM:=b8bfe96d22945c8cf4466826ba9b21bd
++PKG_MD5SUM:=6d0241b72c79d2b510776ccc4ed69ca4
+ 
+ PKG_LICENSE:=GPL-2.0
+ PKG_LICENSE_FILES:=COPYING
+diff -Naur a/openwrt/package/network/services/dnsmasq/patches/100-fix-dhcp-no-address-warning.patch b/openwrt/package/network/services/dnsmasq/patches/100-fix-dhcp-no-address-warning.patch
+--- a/openwrt/package/network/services/dnsmasq/patches/100-fix-dhcp-no-address-warning.patch	2017-10-18 22:57:32.713534131 +0200
++++ b/openwrt/package/network/services/dnsmasq/patches/100-fix-dhcp-no-address-warning.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,47 +0,0 @@
+---- a/src/dhcp.c
+-+++ b/src/dhcp.c
+-@@ -146,7 +146,7 @@ void dhcp_packet(time_t now, int pxe_fd)
+-   struct iovec iov;
+-   ssize_t sz; 
+-   int iface_index = 0, unicast_dest = 0, is_inform = 0;
+--  struct in_addr iface_addr;
+-+  struct in_addr iface_addr, *addrp = NULL;
+-   struct iface_param parm;
+- #ifdef HAVE_LINUX_NETWORK
+-   struct arpreq arp_req;
+-@@ -272,11 +272,9 @@ void dhcp_packet(time_t now, int pxe_fd)
+-     {
+-       ifr.ifr_addr.sa_family = AF_INET;
+-       if (ioctl(daemon->dhcpfd, SIOCGIFADDR, &ifr) != -1 )
+--	iface_addr = ((struct sockaddr_in *) &ifr.ifr_addr)->sin_addr;
+--      else
+- 	{
+--	  my_syslog(MS_DHCP | LOG_WARNING, _("DHCP packet received on %s which has no address"), ifr.ifr_name);
+--	  return;
+-+	  addrp = &iface_addr;
+-+	  iface_addr = ((struct sockaddr_in *) &ifr.ifr_addr)->sin_addr;
+- 	}
+-       
+-       for (tmp = daemon->dhcp_except; tmp; tmp = tmp->next)
+-@@ -295,7 +293,7 @@ void dhcp_packet(time_t now, int pxe_fd)
+-       parm.relay_local.s_addr = 0;
+-       parm.ind = iface_index;
+-       
+--      if (!iface_check(AF_INET, (struct all_addr *)&iface_addr, ifr.ifr_name, NULL))
+-+      if (!iface_check(AF_INET, (struct all_addr *)addrp, ifr.ifr_name, NULL))
+- 	{
+- 	  /* If we failed to match the primary address of the interface, see if we've got a --listen-address
+- 	     for a secondary */
+-@@ -315,6 +313,12 @@ void dhcp_packet(time_t now, int pxe_fd)
+- 	  complete_context(match.addr, iface_index, NULL, match.netmask, match.broadcast, &parm);
+- 	}    
+-       
+-+      if (!addrp)
+-+        {
+-+          my_syslog(MS_DHCP | LOG_WARNING, _("DHCP packet received on %s which has no address"), ifr.ifr_name);
+-+          return;
+-+        }
+-+
+-       if (!iface_enumerate(AF_INET, &parm, complete_context))
+- 	return;
+- 
+diff -Naur a/openwrt/package/network/services/dnsmasq/patches/110-ipset-remove-old-kernel-support.patch b/openwrt/package/network/services/dnsmasq/patches/110-ipset-remove-old-kernel-support.patch
+--- a/openwrt/package/network/services/dnsmasq/patches/110-ipset-remove-old-kernel-support.patch	2017-10-18 22:57:32.713534131 +0200
++++ b/openwrt/package/network/services/dnsmasq/patches/110-ipset-remove-old-kernel-support.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,110 +0,0 @@
+---- a/src/ipset.c
+-+++ b/src/ipset.c
+-@@ -22,7 +22,6 @@
+- #include <errno.h>
+- #include <sys/types.h>
+- #include <sys/socket.h>
+--#include <sys/utsname.h>
+- #include <arpa/inet.h>
+- #include <linux/version.h>
+- #include <linux/netlink.h>
+-@@ -72,7 +71,7 @@ struct my_nfgenmsg {
+- 
+- #define NL_ALIGN(len) (((len)+3) & ~(3))
+- static const struct sockaddr_nl snl = { .nl_family = AF_NETLINK };
+--static int ipset_sock, old_kernel;
+-+static int ipset_sock;
+- static char *buffer;
+- 
+- static inline void add_attr(struct nlmsghdr *nlh, uint16_t type, size_t len, const void *data)
+-@@ -87,25 +86,7 @@ static inline void add_attr(struct nlmsg
+- 
+- void ipset_init(void)
+- {
+--  struct utsname utsname;
+--  int version;
+--  char *split;
+--  
+--  if (uname(&utsname) < 0)
+--    die(_("failed to find kernel version: %s"), NULL, EC_MISC);
+--  
+--  split = strtok(utsname.release, ".");
+--  version = (split ? atoi(split) : 0);
+--  split = strtok(NULL, ".");
+--  version = version * 256 + (split ? atoi(split) : 0);
+--  split = strtok(NULL, ".");
+--  version = version * 256 + (split ? atoi(split) : 0);
+--  old_kernel = (version < KERNEL_VERSION(2,6,32));
+--  
+--  if (old_kernel && (ipset_sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW)) != -1)
+--    return;
+--  
+--  if (!old_kernel && 
+-+  if ( 
+-       (buffer = safe_malloc(BUFF_SZ)) &&
+-       (ipset_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_NETFILTER)) != -1 &&
+-       (bind(ipset_sock, (struct sockaddr *)&snl, sizeof(snl)) != -1))
+-@@ -168,62 +149,16 @@ static int new_add_to_ipset(const char *
+- }
+- 
+- 
+--static int old_add_to_ipset(const char *setname, const struct all_addr *ipaddr, int remove)
+--{
+--  socklen_t size;
+--  struct ip_set_req_adt_get {
+--    unsigned op;
+--    unsigned version;
+--    union {
+--      char name[IPSET_MAXNAMELEN];
+--      uint16_t index;
+--    } set;
+--    char typename[IPSET_MAXNAMELEN];
+--  } req_adt_get;
+--  struct ip_set_req_adt {
+--    unsigned op;
+--    uint16_t index;
+--    uint32_t ip;
+--  } req_adt;
+--  
+--  if (strlen(setname) >= sizeof(req_adt_get.set.name)) 
+--    {
+--      errno = ENAMETOOLONG;
+--      return -1;
+--    }
+--  
+--  req_adt_get.op = 0x10;
+--  req_adt_get.version = 3;
+--  strcpy(req_adt_get.set.name, setname);
+--  size = sizeof(req_adt_get);
+--  if (getsockopt(ipset_sock, SOL_IP, 83, &req_adt_get, &size) < 0)
+--    return -1;
+--  req_adt.op = remove ? 0x102 : 0x101;
+--  req_adt.index = req_adt_get.set.index;
+--  req_adt.ip = ntohl(ipaddr->addr.addr4.s_addr);
+--  if (setsockopt(ipset_sock, SOL_IP, 83, &req_adt, sizeof(req_adt)) < 0)
+--    return -1;
+--  
+--  return 0;
+--}
+--
+--
+--
+- int add_to_ipset(const char *setname, const struct all_addr *ipaddr, int flags, int remove)
+- {
+-   int af = AF_INET;
+- 
+- #ifdef HAVE_IPV6
+-   if (flags & F_IPV6)
+--    {
+-       af = AF_INET6;
+--      /* old method only supports IPv4 */
+--      if (old_kernel)
+--	return -1;
+--    }
+- #endif
+-   
+--  return old_kernel ? old_add_to_ipset(setname, ipaddr, remove) : new_add_to_ipset(setname, ipaddr, af, remove);
+-+  return new_add_to_ipset(setname, ipaddr, af, remove);
+- }
+- 
+- #endif
+diff -Naur a/openwrt/package/network/services/dnsmasq/patches/210-dnssec-improve-timestamp-heuristic.patch b/openwrt/package/network/services/dnsmasq/patches/210-dnssec-improve-timestamp-heuristic.patch
+--- a/openwrt/package/network/services/dnsmasq/patches/210-dnssec-improve-timestamp-heuristic.patch	2017-10-18 22:57:32.713534131 +0200
++++ b/openwrt/package/network/services/dnsmasq/patches/210-dnssec-improve-timestamp-heuristic.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,49 +0,0 @@
+-From 79e60e145f8a595bca5a784c00b437216d51de68 Mon Sep 17 00:00:00 2001
+-From: Steven Barth <steven@midlink.org>
+-Date: Mon, 13 Apr 2015 09:45:20 +0200
+-Subject: [PATCH] dnssec: improve timestamp heuristic
+-
+-Signed-off-by: Steven Barth <steven@midlink.org>
+----
+- src/dnssec.c | 15 +++++++++++----
+- 1 file changed, 11 insertions(+), 4 deletions(-)
+-
+---- a/src/dnssec.c
+-+++ b/src/dnssec.c
+-@@ -432,17 +432,24 @@ static int back_to_the_future;
+- int setup_timestamp(void)
+- {
+-   struct stat statbuf;
+--  
+-+  time_t now;
+-+  time_t base = 1420070400; /* 1-1-2015 */
+-+
+-   back_to_the_future = 0;
+-   
+-   if (!daemon->timestamp_file)
+-     return 0;
+--  
+-+
+-+  now = time(NULL);
+-+
+-+  if (!stat("/proc/self/exe", &statbuf) && difftime(statbuf.st_mtime, base) > 0)
+-+    base = statbuf.st_mtime;
+-+
+-   if (stat(daemon->timestamp_file, &statbuf) != -1)
+-     {
+-       timestamp_time = statbuf.st_mtime;
+-     check_and_exit:
+--      if (difftime(timestamp_time, time(0)) <=  0)
+-+      if (difftime(now, base) >= 0 && difftime(timestamp_time, now) <=  0)
+- 	{
+- 	  /* time already OK, update timestamp, and do key checking from the start. */
+- 	  if (utime(daemon->timestamp_file, NULL) == -1)
+-@@ -463,7 +470,7 @@ int setup_timestamp(void)
+- 
+- 	  close(fd);
+- 	  
+--	  timestamp_time = timbuf.actime = timbuf.modtime = 1420070400; /* 1-1-2015 */
+-+	  timestamp_time = timbuf.actime = timbuf.modtime = base;
+- 	  if (utime(daemon->timestamp_file, &timbuf) == 0)
+- 	    goto check_and_exit;
+- 	}

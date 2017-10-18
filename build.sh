@@ -19,7 +19,7 @@ done
 if [ -z "${gluon_path}" ]; then
 	echo "Usage: $0 -g GLUON_PATH" >&2
 	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
-	echo "       -o OUT_PATH     Path to a checkout of the gluon repository." >&2
+	echo "       -o OUT_PATH     Path to a checkout of the gluon repository. Default: ${gluon_out}" >&2
 	echo "       -b              BROKEN=1" >&2
 	echo "       -v              verbose" >&2
 	echo "       -j JOBS         Run build with -jJOBS. Default: ${proc}" >&2
@@ -57,6 +57,14 @@ for s in $sites; do
 	rm -rf "${GLUON_OUTPUTDIR}"
 	mkdir -p "${GLUON_IMAGEDIR}" "${GLUON_MODULEDIR}"
 	make update
+	# Try to install patches. I wasn't able to figure out how patches in gluon/site/patches work.
+	for p in ${site_path}/patches/*.patch; do
+		if [ -e "$p" -a ! -f "${gluon_path}/${p##*/}" ]; then
+			announce Installing patch $p
+			patch -p1 < $p
+			touch "${gluon_path}/${p##*/}"
+		fi
+	done
 	for t in $targets; do
 		announce Starting build for $s/$t... >&2
 		make -j$(nproc) GLUON_TARGET=$t $verbose
