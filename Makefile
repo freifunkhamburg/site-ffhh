@@ -1,18 +1,28 @@
-all: check_site site.mk site.conf modules
+sites: clean info sites/ffhh sites/ffhh-sued
 
-.PHONY: check_site
-check_site:
-	if test -z "${SITE}"; then echo Usage: make SITE=ffhh; exit 1; else true; fi
+info: config/defaults.erb template/info.erb
+	erb -T- config/defaults.erb template/$@.erb >$@
 
 .PHONY: clean
 clean:
+	rm -rf sites
+	rm -f info
+
+sites/%: config/%.erb
+	mkdir -p $@
+	cd $@ && $(MAKE) -f ../../Makefile site SITE=$(@F)
+
+site: siteclean site.mk site.conf modules
+
+.PHONY: siteclean
+siteclean:
 	rm -f site.mk site.conf modules
 
 modules:
-	cp sites/${SITE}/$@ $@
+	erb -T- ../../config/defaults.erb ../../config/$(SITE).erb ../../template/$@.erb >$@
 
 site.conf:
-	cp sites/${SITE}/$@ $@
+	erb -T- ../../config/defaults.erb ../../config/$(SITE).erb ../../template/$@.erb >$@
 
 site.mk:
-	cp sites/${SITE}/$@ $@
+	erb -T- ../../config/defaults.erb ../../config/$(SITE).erb ../../template/$@.erb >$@
