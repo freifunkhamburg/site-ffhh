@@ -1,0 +1,17 @@
+GLUON_SITE_PACKAGES :=<% gluon_site_packages.each do | p | -%>
+<%= " " + p -%>
+<% end -%>
+
+DEFAULT_GLUON_RELEASE := <%= gluon_release %>
+
+# Allow overriding the release number from the command line
+GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
+
+GLUON_PRIORITY ?= 0
+
+# Region code required for some images; supported values: us eu
+GLUON_REGION ?= eu
+
+GLUON_ATH10K_MESH ?= <%= gluon_ath10k_mesh %>
+
+GLUON_LANGS ?= en de
