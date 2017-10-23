@@ -12,7 +12,7 @@ sites/%: config/%.erb
 	mkdir -p $@
 	cd $@ && $(MAKE) -f ../../Makefile site SITE=$(@F)
 
-site: siteclean site.mk site.conf modules
+site: siteclean site.mk site.conf modules i18n
 
 .PHONY: siteclean
 siteclean:
@@ -26,3 +26,6 @@ site.conf:
 
 site.mk:
 	erb -T- ../../config/defaults.erb ../../config/$(SITE).erb ../../template/$@.erb >$@
+
+i18n:
+	ln -s ../../i18n
