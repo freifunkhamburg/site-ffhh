@@ -1,4 +1,4 @@
-sites: clean info sites/ffhh sites/ffhh-sued
+sites: clean info sites/ffhh sites/ffhh-sued sites/ffhh-nowe sites/ffhh-west sites/ffhh-ost
 
 info: config/defaults.erb template/info.erb
 	erb -T- config/defaults.erb template/$@.erb >$@
