@@ -7,10 +7,11 @@ function announce () {
 proc=$(nproc)
 gluon_out="${HOME}/firmware"
 
-while getopts g:bj:v opt; do
+while getopts g:j:o:s:bv opt; do
 	case "$opt" in
 		g) gluon_path="$OPTARG" ;;
 		o) gluon_out="$OPTARG" ;;
+		s) signature="$OPTARG" ;;
 		b) export BROKEN=1 ;;
 		j) proc="$OPTARG" ;;
 		v) verbose=V=s ;;
@@ -20,6 +21,7 @@ if [ -z "${gluon_path}" ]; then
 	echo "Usage: $0 -g GLUON_PATH" >&2
 	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
 	echo "       -o OUT_PATH     Path to a checkout of the gluon repository. Default: ${gluon_out}" >&2
+	echo "       -s SIGNATURE    Sign firmware with signature" >&2
 	echo "       -b              BROKEN=1" >&2
 	echo "       -v              verbose" >&2
 	echo "       -j JOBS         Run build with -jJOBS. Default: ${proc}" >&2
@@ -73,5 +75,14 @@ for s in $sites; do
 	done
 	announce Building manifest...
 	make manifest
+	if [ -n "${SIGNATURE}" ]; then
+		if [ "$GLUON_BRANCH" == "experimental" ]; then
+			announce Signing
+			"${gluon_path}/contrib/sign.sh" "${SIGNATURE}" "${GLUON_IMAGEDIR}/sysupgrade/experimental.manifest"
+		else
+			echo ERROR: can only sign experimental branch >&2
+			exit 1
+		fi
+	fi
 done
 popd >/dev/null
