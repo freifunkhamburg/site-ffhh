@@ -66,6 +66,8 @@ for s in $sites; do
 		fi
 	done
 	for t in $targets; do
+		announce make clean for $s/$t... >&2
+		make -j1 clean GLUON_TARGET=$t
 		announce Starting build for $s/$t... >&2
 		make -j$(nproc) GLUON_TARGET=$t $verbose
 	done
