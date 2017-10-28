@@ -75,10 +75,10 @@ for s in $sites; do
 	done
 	announce Building manifest...
 	make manifest
-	if [ -n "${SIGNATURE}" ]; then
+	if [ -n "${signature}" ]; then
 		if [ "$GLUON_BRANCH" == "experimental" ]; then
 			announce Signing
-			"${gluon_path}/contrib/sign.sh" "${SIGNATURE}" "${GLUON_IMAGEDIR}/sysupgrade/experimental.manifest"
+			"${gluon_path}/contrib/sign.sh" "${signature}" "${GLUON_IMAGEDIR}/sysupgrade/experimental.manifest"
 		else
 			echo ERROR: can only sign experimental branch >&2
 			exit 1
