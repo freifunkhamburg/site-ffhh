@@ -53,7 +53,7 @@ pushd "${gluon_path}" >/dev/null
 announce Starting make update...
 for s in $sites; do
 	export GLUON_SITEDIR="${site_path}/sites/${s}"
-	export GLUON_OUTPUTDIR="${gluon_out}/${s}/${GLUON_BRANCH}/${GLUON_RELEASE}"
+	export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_BRANCH}/${GLUON_RELEASE}/${s}"
 	export GLUON_IMAGEDIR="${GLUON_OUTPUTDIR}/images"
 	export GLUON_MODULEDIR="${GLUON_OUTPUTDIR}/modules"
 	rm -rf "${GLUON_OUTPUTDIR}"
