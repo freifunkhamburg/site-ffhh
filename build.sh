@@ -43,8 +43,9 @@ make
 export GLUON_RELEASE
 export GLUON_BRANCH
 # get the available sites...
-sites=""
-for s in sites/*; do sites="${sites} ${s##*/}"; done
+if [ "$sites" == "" ]; then
+	for s in sites/*; do sites="${sites} ${s##*/}"; done
+fi
 announce Gluon will be built for the following sites:$sites >&2
 announce The following targets will be generated: $targets >&2
 popd >/dev/null
@@ -53,7 +54,7 @@ pushd "${gluon_path}" >/dev/null
 announce Starting make update...
 for s in $sites; do
 	export GLUON_SITEDIR="${site_path}/sites/${s}"
-	export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_BRANCH}/${GLUON_RELEASE}/${s}"
+	export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_BRANCH}/${s}"
 	export GLUON_IMAGEDIR="${GLUON_OUTPUTDIR}/images"
 	export GLUON_MODULEDIR="${GLUON_OUTPUTDIR}/modules"
 	rm -rf "${GLUON_OUTPUTDIR}"
