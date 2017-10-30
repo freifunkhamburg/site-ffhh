@@ -39,7 +39,7 @@ announce FFHH SITES: $site_path >&2
 announce Building site repo and reading data >&2
 pushd $site_path > /dev/null
 make
-. info
+. ./info
 export GLUON_RELEASE
 export GLUON_BRANCH
 # get the available sites...
