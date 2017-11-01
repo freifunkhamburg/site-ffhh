@@ -28,7 +28,7 @@
 		},
 <% if gluon_ath10k_mesh == "11s" -%>
 		mesh = {
-			id = '<%= site_code.prepend("00000000")[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>'
+			id = '<%= site_code.prepend("00000000")[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 			mcast_rate = 12000,
 		},
 <% else -%>
@@ -47,7 +47,7 @@
 		},
 <% if gluon_ath10k_mesh == "11s" -%>
 		mesh = {
-			id = '<%= site_code.prepend("00000000")[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>'
+			id = '<%= site_code.prepend("00000000")[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 			mcast_rate = 12000,
 		},
 <% else -%>
