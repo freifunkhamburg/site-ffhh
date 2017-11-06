@@ -7,7 +7,7 @@ function announce () {
 proc=$(nproc)
 gluon_out="${HOME}/firmware"
 
-while getopts g:j:l:o:s:bmv opt; do
+while getopts g:j:l:o:s:u:bmv opt; do
 	case "$opt" in
 		g) gluon_path="$OPTARG" ;;
 		l) sites="$OPTARG" ;;
@@ -41,7 +41,7 @@ site_path=$(realpath $(dirname $BASH_SOURCE))
 announce GLUON: $gluon_path >&2
 announce FFHH SITE PATH: $site_path >&2
 
-pushd $site_path > /dev/null
+pushd $site_path
 if [ "$dont_make_sites" == "" ]; then
 	# Build the site repo and generate all site configs
 	announce Building site repo and reading data >&2
@@ -57,9 +57,9 @@ if [ "$sites" == "" ]; then
 fi
 announce Gluon will be built for the following sites:$sites >&2
 announce The following targets will be generated: $targets >&2
-popd >/dev/null
+popd
 
-pushd "${gluon_path}" >/dev/null
+pushd "${gluon_path}"
 announce Starting make update...
 for s in $sites; do
 	export GLUON_SITEDIR="${site_path}/sites/${s}"
@@ -95,7 +95,7 @@ for s in $sites; do
 		fi
 	fi
 done
-popd >/dev/null
+popd
 if [ -n "$uploadscript" ]; then
 		announce Starting upload. Executing: $uploadscript $gluon_out/$GLUON_RELEASE
 		"$uploadscript" "$gluon_out/$GLUON_RELEASE"
