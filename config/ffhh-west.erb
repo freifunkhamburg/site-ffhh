@@ -1,0 +1,42 @@
+<%
+site_name = 'Freifunk Hamburg West'
+site_code = 'ffhh-west'
+
+gluon_site_packages += %w( gluon-mesh-batman-adv-15 )
+gluon_ath10k_mesh = "11s"
+
+prefix4 = '10.112.96.0/19'
+prefix6 = '2a03:2267:2::/64'
+
+next_node_ipv4 = '10.112.96.1'
+next_node_ipv6 = '2a03:2267:2::1'
+
+mtu = 1312
+
+gateways = {
+	"gateway01" => {
+		"key" => "aa88fb5cc3e729c124589e3714b817a505d809f381d9b3494040c382edfd4f3b",
+		"remotes" => [ '"gw01-new.hamburg.freifunk.net" port 10005' ]
+	},
+	"gateway02" => {
+		"key" => "462b4e21ab5eb0f9de687efd97252880c895ba55cc9cc0755a75347b0965b6e0",
+		"remotes" => [ '"gw02-new.hamburg.freifunk.net" port 10005' ]
+	},
+	"gateway03" => {
+		"key" => "e15295b86138ac490d611e4100f847ccfb7052d5091ded4659f25940be2c0546",
+		"remotes" => [ '"gw03-new.hamburg.freifunk.net" port 10005' ]
+	},
+	"gateway04" => {
+		"key" => "a00e092c236c3b56043fb3b5d0b3da3da08d8325fb18e7bae6ed035d50d50669",
+		"remotes" => [ '"gw04-new.hamburg.freifunk.net" port 10006' ]
+	},
+	"gateway05" => {
+		"key" => "291197d88a5ed510a62fec87f30d13315c1e031c62c927c23e1643a72796708f",
+		"remotes" => [ '"gw05-new.hamburg.freifunk.net" port 10006' ]
+	},
+	"gateway06" => {
+		"key" => "8d400e8a9db05b145c36583d46b4170f6b66d1e16177540f8a2f9f5ad0dc4c43",
+		"remotes" => [ '"gw06-new.hamburg.freifunk.net" port 10006' ]
+	},
+}
+-%>
