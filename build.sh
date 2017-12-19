@@ -7,12 +7,15 @@ function announce () {
 proc=$(nproc)
 gluon_out="${HOME}/firmware"
 
-while getopts g:j:o:s:bv opt; do
+while getopts g:j:l:o:s:u:bmv opt; do
 	case "$opt" in
 		g) gluon_path="$OPTARG" ;;
+		l) sites="$OPTARG" ;;
 		o) gluon_out="$OPTARG" ;;
 		s) signature="$OPTARG" ;;
+		u) uploadscript="$OPTARG" ;;
 		b) export BROKEN=1 ;;
+		m) dont_make_sites=1 ;;
 		j) proc="$OPTARG" ;;
 		v) verbose=V=s ;;
 	esac
@@ -20,9 +23,12 @@ done
 if [ -z "${gluon_path}" ]; then
 	echo "Usage: $0 -g GLUON_PATH" >&2
 	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
-	echo "       -o OUT_PATH     Path to a checkout of the gluon repository. Default: ${gluon_out}" >&2
+	echo "       -l SITES        Comma separated list of sites to build" >&2
+	echo "       -o OUT_PATH     Path to the firmware output directory. Default: ${gluon_out}" >&2
 	echo "       -s SIGNATURE    Sign firmware with signature" >&2
+	echo "       -u UPLOADSCRIPT Run UPLOADSCRIPT after building. Argument: $gluon_out/<GLUON_RELEASE>" >&2
 	echo "       -b              BROKEN=1" >&2
+	echo "       -m              Do not regenerate the sites" >&2
 	echo "       -v              verbose" >&2
 	echo "       -j JOBS         Run build with -jJOBS. Default: ${proc}" >&2
 	exit 1
@@ -33,24 +39,27 @@ gluon_out=$(realpath $gluon_out)
 site_path=$(realpath $(dirname $BASH_SOURCE))
 
 announce GLUON: $gluon_path >&2
-announce FFHH SITES: $site_path >&2
+announce FFHH SITE PATH: $site_path >&2
 
-# Build the site repo and generate all site configs
-announce Building site repo and reading data >&2
-pushd $site_path > /dev/null
-make
+pushd $site_path
+if [ "$dont_make_sites" == "" ]; then
+	# Build the site repo and generate all site configs
+	announce Building site repo and reading data >&2
+	make
+fi
 . ./info
 export GLUON_RELEASE
 export GLUON_BRANCH
 # get the available sites...
+sites="$(echo "$sites" | sed -e 's_,_ _g')"
 if [ "$sites" == "" ]; then
 	for s in sites/*; do sites="${sites} ${s##*/}"; done
 fi
 announce Gluon will be built for the following sites:$sites >&2
 announce The following targets will be generated: $targets >&2
-popd >/dev/null
+popd
 
-pushd "${gluon_path}" >/dev/null
+pushd "${gluon_path}"
 announce Starting make update...
 for s in $sites; do
 	export GLUON_SITEDIR="${site_path}/sites/${s}"
@@ -86,4 +95,8 @@ for s in $sites; do
 		fi
 	fi
 done
-popd >/dev/null
+popd
+if [ -n "$uploadscript" ]; then
+		announce Starting upload. Executing: $uploadscript $gluon_out/$GLUON_RELEASE
+		"$uploadscript" "$gluon_out/$GLUON_RELEASE"
+fi
