@@ -86,7 +86,7 @@ for s in $sites; do
 	if [ -n "${signature}" ]; then
 		if [ "$GLUON_BRANCH" == "experimental" ]; then
 			announce Signing
-			"${gluon_path}/contrib/sign.sh" "${signature}" "${GLUON_IMAGEDIR}/sysupgrade/experimental.manifest"
+			"${gluon_path}/contrib/sign.sh" "${signature}" "${GLUON_OUTPUTDIR}/images/sysupgrade/experimental.manifest"
 		else
 			echo ERROR: can only sign experimental branch >&2
 			exit 1
