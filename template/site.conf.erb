@@ -28,7 +28,7 @@
 		},
 <% if gluon_ath10k_mesh == "11s" -%>
 		mesh = {
-			id = '6668682D73756564',
+			id = '<%= ("00000000" + site_code)[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 			mcast_rate = 12000,
 		},
 <% else -%>
@@ -47,7 +47,7 @@
 		},
 <% if gluon_ath10k_mesh == "11s" -%>
 		mesh = {
-			id = '6668682D73756564',
+			id = '<%= ("00000000" + site_code)[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 			mcast_rate = 12000,
 		},
 <% else -%>
@@ -70,7 +70,7 @@
 		enabled = true,
 		mtu = <%= mtu %>,
 		fastd = {
-			configurable = true,         
+			configurable = true,
 			methods = {'salsa2012+umac'},
 			groups = {
 				backbone = {
