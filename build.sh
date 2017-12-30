@@ -65,7 +65,7 @@ for s in $sites; do
 	export GLUON_SITEDIR="${site_path}/sites/${s}"
 	export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_BRANCH}/${s}"
 	rm -rf "${GLUON_OUTPUTDIR}"
-	mkdir -p "${GLUON_IMAGEDIR}" "${GLUON_MODULEDIR}"
+	mkdir -p "${GLUON_OUTPUTDIR}"
 	make update
 	# Try to install patches. I wasn't able to figure out how patches in gluon/site/patches work.
 	for p in ${site_path}/patches/*.patch; do
