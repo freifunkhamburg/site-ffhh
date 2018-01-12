@@ -1,5 +1,7 @@
-GLUON_SITE_FEEDS='ffhh_packages'
+GLUON_SITE_FEEDS='ffhh_packages eulenfunk'
 
 PACKAGES_FFHH_PACKAGES_REPO=git://github.com/freifunkhamburg/ffhh-packages.git
 PACKAGES_FFHH_PACKAGES_COMMIT=ef9fcc1222f74c3c045b1450537a4b8b80efb56c
 
+PACKAGES_EULENFUNK_REPO=https://github.com/eulenfunk/packages.git
+PACKAGES_EULENFUNK_COMMIT=1951b97db14ca7b098db76cd6c64363a14de3903

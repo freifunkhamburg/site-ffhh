@@ -20,13 +20,14 @@ GLUON_SITE_PACKAGES := \
 	gluon-radvd \
 	gluon-respondd \
 	gluon-setup-mode \
+	gluon-ssid-changer \
 	gluon-status-page \
 	iwinfo \
 	iptables \
 	haveged
 
 
-DEFAULT_GLUON_RELEASE := 0.8.4
+DEFAULT_GLUON_RELEASE := 0.8.4.1
 
 # Allow overriding the release number from the command line
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
