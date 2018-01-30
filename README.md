@@ -18,7 +18,7 @@ Please see [the official Gluon repository](https://github.com/freifunk-gluon/glu
 
 #### Gluon versions used for specific Hamburg Freifunk Firmware builds
 
-- 0.9.0: site-ffhh: xxx, gluon: v2017.1.x (9295abcea7b016b0fe4b05c534ea0731b48ef593)
+- 0.9.0: site-ffhh: 60f30382209ffc050baa82be9bad3622a1d88d5b, gluon: v2017.1.x (9295abcea7b016b0fe4b05c534ea0731b48ef593)
 - 0.8.6: v2016.2.7 Fix gw01-new key, add 3.ntp.services.ffhh to NTP servers, add Firmware signing keys for Alexander and Olli, remove old domain
 - 0.8.5: v2016.2.7 Domain split, new package: ffho-ebtables-net-rules
 - 0.8.4: v2016.2.7 (updated openwrt/package/network/services/dnsmasq/Makefile: PKG\_VERSION:=2.78 & PKG\_MD5SUM:=6d0241b72c79d2b510776ccc4ed69ca4)
