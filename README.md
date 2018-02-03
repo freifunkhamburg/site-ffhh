@@ -5,11 +5,11 @@
 	$ cd site-ffhh
 
 	To build all domains into the subdirectory firmware:
-	$ ./build -g ../gluon -o firmware
+	$ ./build.sh -g ../gluon -o firmware
 	To build a specific domain (for example ffhh-nowe) into the subdirectory firmware:
-	$ ./build -g ../gluon -l ffhh-nowe -o firmware
+	$ ./build.sh -g ../gluon -l ffhh-nowe -o firmware
 	To build two specific domains (for example ffhh-nowe and ffhh-sued) into the subdirectory firmware:
-	$ ./build -g ../gluon -l ffhh-nowe,ffhh-sued -o firmware
+	$ ./build.sh -g ../gluon -l ffhh-nowe,ffhh-sued -o firmware
 
 	The build.sh supports the argument -b if you wish to also build firmware images marked as broken in gluon.
 
