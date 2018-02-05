@@ -2,6 +2,27 @@ GLUON_SITE_PACKAGES :=<% gluon_site_packages.each do | p | -%>
 <%= " " + p -%>
 <% end -%>
 
+
+# EXTRA_SOFTWARE_TOOLS_01
+EXTRA_SOFTWARE_TOOLS_01 := \
+        nano \
+        htop \
+        ethtool
+
+# x86
+ifeq ($(GLUON_TARGET),x86-generic)
+GLUON_SITE_PACKAGES += \
+    $(EXTRA_SOFTWARE_TOOLS_01)
+endif
+
+# x86-64
+ifeq ($(GLUON_TARGET),x86-64)
+GLUON_SITE_PACKAGES += \
+    $(EXTRA_SOFTWARE_TOOLS_01)
+endif
+
+
+
 DEFAULT_GLUON_RELEASE := <%= gluon_release %>
 
 # Allow overriding the release number from the command line
