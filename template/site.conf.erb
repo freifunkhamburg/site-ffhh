@@ -2,6 +2,7 @@
 	hostname_prefix = 'GibMirEinenNamen',
 	site_name = '<%= site_name %>',
 	site_code = '<%= site_code %>',
+	domain_seed = '<%= (site_code + ("Hamburg" * 7))[0..31].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 
 	opkg = {
 		lede = 'http://lede.opkg.services.ffhh/snapshots/packages/%A',
