@@ -4,34 +4,67 @@ set -e
 function announce () {
 	echo '############################' $* >&2
 }
-
-proc=$(nproc)
-gluon_out="${HOME}/firmware"
-
-while getopts g:j:l:o:s:u:bmv opt; do
-	case "$opt" in
-		g) gluon_path="$OPTARG" ;;
-		l) sites="$OPTARG" ;;
-		o) gluon_out="$OPTARG" ;;
-		s) signature="$OPTARG" ;;
-		u) uploadscript="$OPTARG" ;;
-		b) export BROKEN=1 ;;
-		m) dont_make_sites=1 ;;
-		j) proc="$OPTARG" ;;
-		v) verbose=V=s ;;
-	esac
-done
-if [ -z "${gluon_path}" ]; then
+function usage () {
 	echo "Usage: $0 -g GLUON_PATH" >&2
 	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
 	echo "       -l SITES        Comma separated list of sites to build" >&2
 	echo "       -o OUT_PATH     Path to the firmware output directory. Default: ${gluon_out}" >&2
 	echo "       -s SIGNATURE    Sign firmware with signature" >&2
-	echo "       -u UPLOADSCRIPT Run UPLOADSCRIPT after building. Argument: $gluon_out/<GLUON_RELEASE>" >&2
+	echo "       -u UPLOADSCRIPT Run UPLOADSCRIPT after building. Will be run with one argument: $gluon_out/<GLUON_RELEASE>" >&2
 	echo "       -b              BROKEN=1" >&2
 	echo "       -m              Do not regenerate the sites" >&2
 	echo "       -v              verbose" >&2
 	echo "       -j JOBS         Run build with -jJOBS. Default: ${proc}" >&2
+}
+
+proc=$(nproc)
+gluon_out="${HOME}/firmware"
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-g)
+			gluon_path="$2"
+			shift
+			;;
+		-l)
+			sites="$2"
+			shift
+			;;
+		-o)
+			gluon_out="$2"
+			shift
+			;;
+		-s)
+			signature="$2"
+			shift
+			;;
+		-u)
+			uploadscript="$2"
+			shift
+			;;
+		-b)
+			export BROKEN=1
+			;;
+		-m)
+			dont_make_sites=1
+			;;
+		-j)
+			proc="$2"
+			shift
+			;;
+		-v)
+			verbose=V=s
+			;;
+		*)
+			usage
+			exit 1
+			;;
+	esac
+	shift
+done
+
+if [ -z "$gluon_path" ]; then
+	usage
 	exit 1
 fi
 
