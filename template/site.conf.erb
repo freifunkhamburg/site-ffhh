@@ -26,18 +26,10 @@
 		ap = {
 			ssid = 'hamburg.freifunk.net',
 		},
-<% if gluon_ath10k_mesh == "11s" -%>
 		mesh = {
 			id = '<%= ("00000000" + site_code)[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 			mcast_rate = 12000,
 		},
-<% else -%>
-		ibss = {
-			ssid = 'f8:d1:11:87:52:2e',
-			bssid = 'f8:d1:11:87:52:2e',
-			mcast_rate = 12000,
-		},
-<% end -%>
 	},
 
 	wifi5 = {
@@ -45,18 +37,10 @@
 		ap = {
 			ssid = 'hamburg.freifunk.net',
 		},
-<% if gluon_ath10k_mesh == "11s" -%>
 		mesh = {
 			id = '<%= ("00000000" + site_code)[-8..-1].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
 			mcast_rate = 12000,
 		},
-<% else -%>
-		ibss = {
-			ssid = 'f8:d1:11:87:52:2e',
-			bssid = 'f8:d1:11:87:52:2e',
-			mcast_rate = 12000,
-		},
-<% end -%>
 	},
 
 	next_node = {
