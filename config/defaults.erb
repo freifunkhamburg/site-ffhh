@@ -19,6 +19,21 @@ gluon_targets = %w(
 	x86-64
 )
 
+# Add more targets for experimental builds...
+if ENV["BROKEN"]
+	gluon_targets += %w(
+		ar71xx-mikrotik
+		brcm2708-bcm2710
+		ipq806x
+		mvebu
+		ramips-mt7620
+		ramips-mt7628
+		ramips-rt305x
+		sunxi
+	)
+end
+gluon_targets.sort!.uniq!
+
 gluon_site_packages = %w(
 	gluon-autoupdater
 	gluon-config-mode-autoupdater
