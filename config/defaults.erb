@@ -19,7 +19,7 @@ gluon_targets = %w(
 	x86-64
 )
 
-# Add more targets for experimental builds...
+# Add more targets if broken images are included...
 if ENV["BROKEN"]
 	gluon_targets += %w(
 		ar71xx-mikrotik
