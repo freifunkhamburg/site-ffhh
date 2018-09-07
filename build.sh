@@ -8,6 +8,7 @@ function usage () {
 	echo "Usage: $0 -g GLUON_PATH" >&2
 	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
 	echo "       -l SITES        Comma separated list of sites to build" >&2
+	echo "       -t TARGETS      Comma separated list of gluon targets to build" >&2
 	echo "       -o OUT_PATH     Path to the firmware output directory. Default: ${gluon_out}" >&2
 	echo "       -s SIGNATURE    Sign firmware with signature" >&2
 	echo "       -u UPLOADSCRIPT Run UPLOADSCRIPT after building. Will be run with one argument: $gluon_out/<GLUON_RELEASE>" >&2
@@ -28,6 +29,10 @@ while [ $# -gt 0 ]; do
 			;;
 		-l)
 			sites="$2"
+			shift
+			;;
+		-t)
+			build_targets="$2"
 			shift
 			;;
 		-o)
@@ -84,6 +89,8 @@ fi
 . ./info
 export GLUON_RELEASE
 export GLUON_BRANCH
+# if a list of build targets has been supplied, only build those
+targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
 # get the available sites...
 sites="$(echo "$sites" | sed -e 's_,_ _g')"
 if [ "$sites" == "" ]; then
