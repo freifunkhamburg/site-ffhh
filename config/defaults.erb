@@ -7,44 +7,30 @@ gluon_release = "v2018.1.1.0"
 gluon_release += "~exp" + Time.new.strftime("%Y%m%d") if gluon_branch == "experimental"
 
 gluon_targets = %w(
-		ar71xx-generic
-		ar71xx-tiny
-		ar71xx-nand
-		brcm2708-bcm2708
-		brcm2708-bcm2709
-		mpc85xx-generic
-		ramips-mt7621
-		sunxi
-		x86-generic
-		x86-geode
-		x86-64
-		ipq806x
-		ramips-mt7620
-		ramips-mt7628
-		ramips-rt305x
+	ar71xx-generic
+	ar71xx-nand
+	ar71xx-tiny
+	brcm2708-bcm2708
+	brcm2708-bcm2709
+	ipq40xx
+	ipq806x
+	mpc85xx-generic
+	ramips-mt7620
+	ramips-mt7621
+	ramips-mt76x8
+	ramips-rt305x
+	sunxi-cortexa7
+	x86-64
+	x86-generic
+	x86-geode
 )
 
-# Targets to build if possibly broken or untested images are included
+# Add more targets if broken images are included...
 if ENV["BROKEN"]
-	gluon_targets = %w(
-		ar71xx-generic
+	gluon_targets += %w(
 		ar71xx-mikrotik
-		ar71xx-nand
-		ar71xx-tiny
-		brcm2708-bcm2708
-		brcm2708-bcm2709
 		brcm2708-bcm2710
-		ipq806x
-		mpc85xx-generic
-		mvebu
-		ramips-mt7620
-		ramips-mt7621
-		ramips-mt7628
-		ramips-rt305x
-		sunxi
-		x86-64
-		x86-generic
-		x86-geode
+		mvebu-cortexa9
 	)
 end
 gluon_targets.sort!.uniq!
