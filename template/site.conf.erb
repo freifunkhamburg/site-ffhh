@@ -1,5 +1,11 @@
 {
 	hostname_prefix = 'GibMirEinenNamen',
+	config_mode = {
+		hostname = {
+			optional = false,
+			prefill = true,
+		},
+	},
 	site_name = '<%= site_name %>',
 	site_code = '<%= site_code %>',
 	domain_seed = '<%= (site_code + ("Hamburg" * 7))[0..31].each_byte.map { |b| b.to_s(16) }.join.upcase %>',
