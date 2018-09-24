@@ -1,7 +1,22 @@
-GLUON_SITE_PACKAGES :=<% gluon_site_packages.each do | p | -%>
-<%= " " + p -%>
-<% end -%>
+GLUON_SITE_PACKAGES := -gluon-config-mode-geo-location \
+	-gluon-config-mode-contact-info \
+	gluon-ebtables-source-filter \
+	haveged \
+	iptables \
+	iwinfo
 
+GLUON_FEATURES := \
+	autoupdater \
+	ebtables-filter-multicast \
+	ebtables-filter-ra-dhcp \
+	ebtables-limit-arp \
+	mesh-batman-adv-15 \
+	mesh-vpn-fastd \
+	radvd \
+	respondd \
+	status-page \
+	web-advanced \
+	web-wizard
 
 # EXTRA_SOFTWARE_TOOLS_01
 EXTRA_SOFTWARE_TOOLS_01 := \

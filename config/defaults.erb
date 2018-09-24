@@ -35,31 +35,6 @@ if ENV["BROKEN"]
 end
 gluon_targets.sort!.uniq!
 
-gluon_site_packages = %w(
-	gluon-autoupdater
-	gluon-config-mode-autoupdater
-	gluon-config-mode-core
-	gluon-config-mode-hostname
-	gluon-config-mode-mesh-vpn
-	gluon-ebtables-filter-multicast
-	gluon-ebtables-filter-ra-dhcp
-	gluon-ebtables-source-filter
-	gluon-mesh-batman-adv-15
-	gluon-mesh-vpn-fastd
-	gluon-radvd
-	gluon-respondd
-	gluon-setup-mode
-	gluon-status-page
-	gluon-web-admin
-	gluon-web-autoupdater
-	gluon-web-network
-	gluon-web-private-wifi
-	gluon-web-wifi-config
-	haveged
-	iptables
-	iwinfo
-)
-
 signing_keys = [
 		'ef73bc52b929fd11efce9a5c8f0b5463f1766bb995c8a0b3b6bcd7ba45b8b1e6', # leo
 		'3f0fc50d4e5c893f9f58f98874bd21080b93c28ff5e4d4946352cada1b4e6441', # andre
