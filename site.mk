@@ -1,3 +1,5 @@
+GLUON_MULTIDOMAIN := 1
+
 GLUON_SITE_PACKAGES := -gluon-config-mode-geo-location \
 	-gluon-config-mode-contact-info \
 	gluon-ebtables-source-filter \
@@ -8,6 +10,7 @@ GLUON_SITE_PACKAGES := -gluon-config-mode-geo-location \
 
 GLUON_FEATURES := \
 	autoupdater \
+	config-mode-domain-select \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	ebtables-limit-arp \
@@ -37,14 +40,7 @@ GLUON_SITE_PACKAGES += \
     $(EXTRA_SOFTWARE_TOOLS_01)
 endif
 
-
-
-DEFAULT_GLUON_RELEASE := <%= gluon_release %>
-
-# Allow overriding the release number from the command line
-GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
-
-GLUON_PRIORITY ?= 0
+GLUON_PRIORITY ?= 7
 
 # Region code required for some images; supported values: us eu
 GLUON_REGION ?= eu
