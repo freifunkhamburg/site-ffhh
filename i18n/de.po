@@ -16,6 +16,14 @@ msgstr ""
 "Freifunk-Knoten. Fülle das folgende Formular deinen Vorstellungen "
 "entsprechend aus und sende es ab. "
 "Den unten anzugebenden Knotennamen kannst du beliebig wählen. Denke Dir also etwas schönes aus. Er ist der Name des Knotens im Netzwerk und hat nichts mit dem ausgestrahlten Netzwerknamen (SSID) zu tun. Letzterer ist immer hamburg.freifunk.net."
+ 
+msgid "gluon-config-mode:domain"
+msgstr "Domäne" 
+
+msgid "gluon-config-mode:domain-select"
+msgstr ""
+"Hier kannst du Domäne auswählen, in dem sich dein Knoten befindet. "
+"Bitte bedenke, dass sich dein Knoten nur mit Routern in der gleichen Domäne verbinden kann."
 
 msgid "gluon-config-mode:pubkey"
 msgstr ""

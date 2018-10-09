@@ -19,6 +19,15 @@ msgstr ""
 "the network and has nothing to do with the broadcast network name (SSID). "
 "The latter is always hamburg.freifunk.net."
 
+msgid "gluon-config-mode:domain"
+msgstr "Domain" 
+
+msgid "gluon-config-mode:domain-select"
+msgstr ""
+"Here you have the possibility of selecting the mesh domain in which your node "
+"is placed. Please keep in mind that your router only connects with the nodes "
+"of the selected domain"
+
 msgid "gluon-config-mode:pubkey"
 msgstr ""
 "<p>This is the public key for your Freifunk node. You can only "
