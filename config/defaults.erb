@@ -18,7 +18,6 @@ gluon_targets = %w(
 		x86-generic
 		x86-geode
 		x86-64
-		ipq806x
 		ramips-mt7620
 		ramips-mt7628
 		ramips-rt305x
@@ -29,6 +28,7 @@ if ENV["BROKEN"]
 	gluon_targets += %w(
 		ar71xx-mikrotik
 		brcm2708-bcm2710
+		ipq806x
 		mvebu
 		ramips-mt7620
 	)
