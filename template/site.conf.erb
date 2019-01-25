@@ -7,7 +7,7 @@
 	opkg = {
 		lede = 'http://lede.opkg.services.ffhh/snapshots/packages/%A',
 		extra = {
-			modules = 'http://updates.hamburg.freifunk.net/%GS/stable/archive/modules/gluon-%GS-%GR/%S',
+			modules = 'http://updates.hamburg.freifunk.net/multi/stable/archive/modules/gluon-ffhh-%GR/%S',
 		},
 	},
 
@@ -87,7 +87,7 @@
 		branches = {
 			stable = {
 				name = 'stable',
-				mirrors = {'http://1.updates.services.ffhh/<%= site_code %>/stable/sysupgrade','http://2.updates.services.ffhh/<%= site_code %>/stable/sysupgrade'},
+				mirrors = {'http://1.updates.services.ffhh/multi/stable/sysupgrade','http://2.updates.services.ffhh/multi/stable/sysupgrade'},
 				good_signatures = 2,
 				pubkeys = {
 <% signing_keys.each do | key | -%>
@@ -97,7 +97,7 @@
 			},
 			beta = {
 				name = 'beta',
-				mirrors = {'http://1.updates.services.ffhh/<%= site_code %>/beta/sysupgrade','http://2.updates.services.ffhh/<%= site_code %>/beta/sysupgrade'},
+				mirrors = {'http://1.updates.services.ffhh/multi/beta/sysupgrade','http://2.updates.services.ffhh/multi/beta/sysupgrade'},
 				good_signatures = 2,
 				pubkeys = {
 <% signing_keys.each do | key | -%>
@@ -107,7 +107,7 @@
 			},
 			experimental = {
 				name = 'experimental',
-				mirrors = {'http://1.updates.services.ffhh/<%= site_code %>/experimental/sysupgrade','http://2.updates.services.ffhh/<%= site_code %>/experimental/sysupgrade'},
+				mirrors = {'http://1.updates.services.ffhh/multi/experimental/sysupgrade','http://2.updates.services.ffhh/multi/experimental/sysupgrade'},
 				good_signatures = 1,
 				pubkeys = {
 <% signing_keys_experimental.each do | key | -%>
