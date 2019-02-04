@@ -69,6 +69,7 @@ announce FFHH SITE PATH: $site_path >&2
 
 pushd $site_path
 . ./build.conf
+[ "${GLUON_BRANCH}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
 export GLUON_RELEASE
 export GLUON_BRANCH
 # if a list of build targets has been supplied, only build those
