@@ -5,12 +5,8 @@
 	$ git clone -b SITE_VERSION https://github.com/freifunkhamburg/site-ffhh.git
 	$ cd site-ffhh
 
-	To build all domains into the subdirectory firmware:
+	To build the firmware into the subdirectory firmware:
 	$ ./build.sh -g ../gluon -o firmware
-	To build a specific domain (for example ffhh-nowe) into the subdirectory firmware:
-	$ ./build.sh -g ../gluon -l ffhh-nowe -o firmware
-	To build two specific domains (for example ffhh-nowe and ffhh-sued) into the subdirectory firmware:
-	$ ./build.sh -g ../gluon -l ffhh-nowe,ffhh-sued -o firmware
 
 	The build.sh supports the argument -b if you wish to also build firmware images marked as broken in gluon.
 
@@ -19,6 +15,8 @@ Please see [the official Gluon repository](https://github.com/freifunk-gluon/glu
 
 #### Gluon versions used for specific Hamburg Freifunk Firmware builds
 
+- v2018.1.4.2: site-ffhh: v2018.1.4.2, gluon: v2018.1.4
+- v2018.1.4.1: site-ffhh: v2018.1.4.1, gluon: v2018.1.4
 - v2018.1.4.0: site-ffhh: v2018.1.4.0, gluon: v2018.1.4
 - v2018.1.3.0: site-ffhh: v2018.1.3.0, gluon: v2018.1.3
 - v2018.1.1.0: site-ffhh: v2018.1.1.0, gluon: v2018.1.1
