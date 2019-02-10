@@ -87,7 +87,7 @@
 		branches = {
 			stable = {
 				name = 'stable',
-				mirrors = {'http://1.updates.services.ffhh/multi/stable/images/sysupgrade','http://2.updates.services.ffhh/multi/stable/images/sysupgrade'},
+				mirrors = {'http://updates-a.hamburg.freifunk.net/multi/stable/images/sysupgrade','http://updates-b.hamburg.freifunk.net/multi/stable/images/sysupgrade'},
 				good_signatures = 2,
 				pubkeys = {
 <% signing_keys.each do | key | -%>
@@ -97,7 +97,7 @@
 			},
 			beta = {
 				name = 'beta',
-				mirrors = {'http://1.updates.services.ffhh/multi/stable/images/sysupgrade','http://2.updates.services.ffhh/multi/stable/images/sysupgrade'},
+				mirrors = {'http://updates-a.hamburg.freifunk.net/multi/stable/images/sysupgrade','http://updates-b.hamburg.freifunk.net/multi/stable/images/sysupgrade'},
 				good_signatures = 2,
 				pubkeys = {
 <% signing_keys.each do | key | -%>
@@ -107,7 +107,7 @@
 			},
 			experimental = {
 				name = 'experimental',
-				mirrors = {'http://1.updates.services.ffhh/multi/experimental/images/sysupgrade','http://2.updates.services.ffhh/multi/experimental/images/sysupgrade'},
+				mirrors = {'http://updates-a.hamburg.freifunk.net/multi/experimental/images/sysupgrade','http://updates-b.hamburg.freifunk.net/multi/experimental/images/sysupgrade'},
 				good_signatures = 1,
 				pubkeys = {
 <% signing_keys_experimental.each do | key | -%>
