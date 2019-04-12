@@ -97,7 +97,7 @@ for t in $targets; do
 	make -j$(nproc) GLUON_TARGET=$t $verbose
 done
 # Generate the images.list
-( cd "${GLUON_OUTPUTDIR}/images" && find -type f ! -iname '*.manifest' ! -iname images.list | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
+( cd "${GLUON_OUTPUTDIR}/images" && ( find -type f ! -iname '*.manifest' ! -iname images.list; find -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
 announce Building manifest...
 make manifest
 if [ -n "${signature}" ]; then
