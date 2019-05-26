@@ -2,7 +2,7 @@
 set -e
 
 function announce () {
-	echo '############################' $* >&2
+	echo '############################' "$@" >&2
 }
 function usage () {
 	echo "Usage: $0 -g GLUON_PATH" >&2
@@ -60,21 +60,21 @@ if [ -z "$gluon_path" ]; then
 	exit 1
 fi
 
-gluon_path=$(realpath $gluon_path)
-gluon_out=$(realpath $gluon_out)
-site_path=$(realpath $(dirname $BASH_SOURCE))
+gluon_path=$(realpath "$gluon_path")
+gluon_out=$(realpath "$gluon_out")
+site_path=$(realpath "$(dirname "$BASH_SOURCE")")
 
-announce GLUON: $gluon_path >&2
-announce FFHH SITE PATH: $site_path >&2
+announce GLUON: "$gluon_path" >&2
+announce FFHH SITE PATH: "$site_path" >&2
 
-pushd $site_path
+pushd "$site_path"
 . ./build.conf
 [ "${GLUON_BRANCH}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
 export GLUON_RELEASE
 export GLUON_BRANCH
 # if a list of build targets has been supplied, only build those
 targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
-announce The following targets will be generated: $targets >&2
+announce "The following targets will be generated: $targets" >&2
 popd
 
 pushd "${gluon_path}"
@@ -85,16 +85,16 @@ rm -rf "${GLUON_OUTPUTDIR}"
 mkdir -p "${GLUON_OUTPUTDIR}"
 make update
 # Try to install patches. I wasn't able to figure out how patches in gluon/site/patches work.
-for p in ${site_path}/patches/*.patch; do
-	if [ -e "$p" -a ! -f "${gluon_path}/${p##*/}" ]; then
-		announce Installing patch $p
-		patch -p1 < $p
+for p in "${site_path}"/patches/*.patch; do
+	if [ -e "$p" ] && [ ! -f "${gluon_path}/${p##*/}" ]; then
+		announce "Installing patch $p"
+		patch -p1 < "$p"
 		touch "${gluon_path}/${p##*/}"
 	fi
 done
 for t in $targets; do
-	announce Starting build for $t... >&2
-	make -j$(nproc) GLUON_TARGET=$t $verbose
+	announce "Starting build for $t..." >&2
+	make "-j$(nproc)" "GLUON_TARGET=$t" "$verbose"
 done
 # Generate the images.list
 ( cd "${GLUON_OUTPUTDIR}/images" && ( find -type f ! -iname '*.manifest' ! -iname images.list; find -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
