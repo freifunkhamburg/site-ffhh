@@ -1,4 +1,5 @@
 GLUON_MULTIDOMAIN := 1
+GLUON_DEPRECATED := upgrade
 
 GLUON_SITE_PACKAGES := -gluon-config-mode-geo-location \
 	-gluon-config-mode-contact-info \
