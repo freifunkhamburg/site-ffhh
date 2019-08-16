@@ -78,17 +78,9 @@ export GLUON_RELEASE
 export GLUON_BRANCH
 export GLUON_SITEDIR="${site_path}"
 export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_BRANCH}"
-pushd "${gluon_path}"
-if [ "$auto_targets" = "1" ]; then
-	# detect available targets
-	targets="$(make | awk '$1 == "*" {print $2}' | sort | xargs)"
-else
-	# if a list of build targets has been supplied, only build those
-	targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
-fi
-announce "The following targets will be generated: $targets" >&2
 popd
 
+pushd "${gluon_path}"
 announce Starting make update...
 rm -rf "${GLUON_OUTPUTDIR}"
 mkdir -p "${GLUON_OUTPUTDIR}"
@@ -101,6 +93,16 @@ for p in "${site_path}"/patches/*.patch; do
 		touch "${gluon_path}/${p##*/}"
 	fi
 done
+
+if [ "$auto_targets" = "1" ]; then
+	# detect available targets
+	targets="$(make | awk '$1 == "*" {print $2}' | sort | xargs)"
+else
+	# if a list of build targets has been supplied, only build those
+	targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
+fi
+announce "The following targets will be generated: $targets" >&2
+
 for t in $targets; do
 	announce "Starting build for $t..." >&2
 	make "-j$(nproc)" "GLUON_TARGET=$t" "$verbose"
