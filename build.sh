@@ -8,6 +8,7 @@ function usage () {
 	echo "Usage: $0 -g GLUON_PATH" >&2
 	echo "       -g GLUON_PATH   Path to a checkout of the gluon repository." >&2
 	echo "       -t TARGETS      Comma separated list of gluon targets to build" >&2
+	echo "       -a              Automatically detect and build all targets." >&2
 	echo "       -o OUT_PATH     Path to the firmware output directory. Default: ${gluon_out}" >&2
 	echo "       -s SIGNATURE    Sign firmware with signature" >&2
 	echo "       -b              BROKEN=1" >&2
@@ -20,6 +21,9 @@ gluon_out="${HOME}/firmware"
 
 while [ $# -gt 0 ]; do
 	case "$1" in
+		-a)
+			auto_targets=1
+			;;
 		-g)
 			gluon_path="$2"
 			shift
@@ -72,15 +76,20 @@ pushd "$site_path"
 [ "${GLUON_BRANCH}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
 export GLUON_RELEASE
 export GLUON_BRANCH
-# if a list of build targets has been supplied, only build those
-targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
+export GLUON_SITEDIR="${site_path}"
+export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_BRANCH}"
+pushd "${gluon_path}"
+if [ "$auto_targets" = "1" ]; then
+	# detect available targets
+	targets="$(make | awk '$1 == "*" {print $2}' | sort | xargs)"
+else
+	# if a list of build targets has been supplied, only build those
+	targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
+fi
 announce "The following targets will be generated: $targets" >&2
 popd
 
-pushd "${gluon_path}"
 announce Starting make update...
-export GLUON_SITEDIR="${site_path}"
-export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_BRANCH}"
 rm -rf "${GLUON_OUTPUTDIR}"
 mkdir -p "${GLUON_OUTPUTDIR}"
 make update
