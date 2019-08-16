@@ -96,8 +96,7 @@ done
 
 if [ "$auto_targets" = "1" ]; then
 	# detect available targets
-	make
-	targets="$(make | awk '$1 == "*" {print $2}' | sort | xargs)"
+	targets="$(make list-targets | sort | xargs)"
 else
 	# if a list of build targets has been supplied, only build those
 	targets="$(echo "${build_targets:-$targets}" | sed -e 's_,_ _g')"
