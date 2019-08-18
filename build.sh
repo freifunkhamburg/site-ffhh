@@ -72,6 +72,7 @@ announce GLUON: "$gluon_path" >&2
 announce FFHH SITE PATH: "$site_path" >&2
 
 pushd "$site_path"
+# shellcheck source=/dev/null
 . ./build.conf
 [ "${GLUON_BRANCH}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
 export GLUON_RELEASE
@@ -114,7 +115,8 @@ for broken_image in "${broken_images[@]}"; do
 	find "${GLUON_OUTPUTDIR}/images" -iname "${broken_image}" \( -type f -o -type l \) -ls -exec rm -f {} \;
 done
 # Generate the images.list
-( cd "${GLUON_OUTPUTDIR}/images" && ( find -type f ! -iname '*.manifest' ! -iname images.list; find -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
+# shellcheck disable=SC2094
+( cd "${GLUON_OUTPUTDIR}/images" && ( find . -type f ! -iname '*.manifest' ! -iname images.list; find . -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
 announce Building manifest...
 make manifest
 if [ -n "${signature}" ]; then
