@@ -108,6 +108,12 @@ for t in $targets; do
 	announce "Starting build for $t..." >&2
 	make "-j$(nproc)" "GLUON_TARGET=$t" "$verbose"
 done
+# Remove known-broken images
+# shellcheck disable=SC2154
+for broken_image in "${broken_images[@]}"; do
+	announce "Removing broken image ${broken_image}..."
+	find "${GLUON_OUTPUTDIR}/${GLUON_BRANCH}/images" -iname "${broken_image}" \( -type f -o -type l \) -ls -exec rm -f {} \;
+done
 # Generate the images.list
 # shellcheck disable=SC2094
 ( cd "${GLUON_OUTPUTDIR}/images" && ( find . -type f ! -iname '*.manifest' ! -iname images.list; find . -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
