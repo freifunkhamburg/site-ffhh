@@ -116,7 +116,7 @@ for broken_image in "${broken_images[@]}"; do
 done
 # Generate the images.list
 # shellcheck disable=SC2094
-( cd "${GLUON_OUTPUTDIR}/images" && ( find . -type f ! -iname '*.manifest' ! -iname images.list; find . -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
+( cd "${GLUON_OUTPUTDIR}/images" && ( echo "RELEASE=${GLUON_RELEASE}"; find . -type f ! -iname '*.manifest' ! -iname images.list; find . -type l ! -iname '*.manifest' ) | sed -e 's!^\./\(.*\)$!\1!' -e 's!/! !g' | sort > images.list )
 announce Building manifest...
 make manifest
 if [ -n "${signature}" ]; then
