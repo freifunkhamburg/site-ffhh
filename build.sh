@@ -106,7 +106,7 @@ announce "The following targets will be generated: $targets" >&2
 
 for t in $targets; do
 	announce "Starting build for $t..." >&2
-	make "-j$(nproc)" "GLUON_TARGET=$t" "$verbose"
+	make "-j$(nproc)" "GLUON_TARGET=$t" $verbose
 done
 # Remove known-broken images
 # shellcheck disable=SC2154
