@@ -66,7 +66,7 @@ fi
 
 gluon_path=$(realpath "$gluon_path")
 gluon_out=$(realpath "$gluon_out")
-site_path=$(realpath "$(dirname "$BASH_SOURCE")")
+site_path=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 
 announce GLUON: "$gluon_path" >&2
 announce FFHH SITE PATH: "$site_path" >&2
