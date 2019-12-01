@@ -17,6 +17,7 @@ GLUON_FEATURES := \
 	ebtables-limit-arp \
 	mesh-batman-adv-15 \
 	mesh-vpn-fastd \
+	web-private-wifi \
 	radvd \
 	respondd \
 	status-page \
