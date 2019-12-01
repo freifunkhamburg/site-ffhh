@@ -22,22 +22,12 @@ GLUON_FEATURES := \
 	web-advanced \
 	web-wizard
 
-# EXTRA_SOFTWARE_TOOLS_01
-EXTRA_SOFTWARE_TOOLS_01 := \
-	nano \
-	htop \
-	ethtool
-
-# x86
-ifeq ($(GLUON_TARGET),x86-generic)
-GLUON_SITE_PACKAGES += \
-	$(EXTRA_SOFTWARE_TOOLS_01)
-endif
-
-# x86-64
-ifeq ($(GLUON_TARGET),x86-64)
-GLUON_SITE_PACKAGES += \
-	$(EXTRA_SOFTWARE_TOOLS_01)
+# x86 and x86-64 add extra software
+ifeq ($(GLUON_TARGET),$(filter $(GLUON_TARGET),x86-generic x86-64))
+	GLUON_SITE_PACKAGES += \
+		nano \
+		htop \
+		ethtool
 endif
 
 GLUON_PRIORITY ?= 7
