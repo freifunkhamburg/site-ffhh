@@ -1,7 +1,8 @@
 GLUON_MULTIDOMAIN := 1
 GLUON_DEPRECATED := upgrade
 
-GLUON_SITE_PACKAGES := -gluon-config-mode-geo-location \
+GLUON_SITE_PACKAGES := \
+	-gluon-config-mode-geo-location \
 	-gluon-config-mode-contact-info \
 	gluon-ebtables-source-filter \
 	gluon-web-mesh-vpn-fastd \
@@ -25,20 +26,20 @@ GLUON_FEATURES := \
 
 # EXTRA_SOFTWARE_TOOLS_01
 EXTRA_SOFTWARE_TOOLS_01 := \
-        nano \
-        htop \
-        ethtool
+	nano \
+	htop \
+	ethtool
 
 # x86
 ifeq ($(GLUON_TARGET),x86-generic)
 GLUON_SITE_PACKAGES += \
-    $(EXTRA_SOFTWARE_TOOLS_01)
+	$(EXTRA_SOFTWARE_TOOLS_01)
 endif
 
 # x86-64
 ifeq ($(GLUON_TARGET),x86-64)
 GLUON_SITE_PACKAGES += \
-    $(EXTRA_SOFTWARE_TOOLS_01)
+	$(EXTRA_SOFTWARE_TOOLS_01)
 endif
 
 GLUON_PRIORITY ?= 7
