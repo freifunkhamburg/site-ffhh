@@ -15,6 +15,7 @@ Please see [the official Gluon repository](https://github.com/freifunk-gluon/glu
 
 #### Gluon versions used for specific Hamburg Freifunk Firmware builds
 
+- v2020.1.3.0: site-ffhh: v2020.1.3.0, gluon: v2020.1.3
 - v2019.1.2.0: site-ffhh: v2019.1.2.0, gluon: v2019.1.2
 - v2018.2.3.0: site-ffhh: v2018.2.3.0, gluon: v2018.2.3
 - v2018.2.1.0: site-ffhh: v2018.2.1.0, gluon: v2018.2.1
