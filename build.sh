@@ -11,6 +11,7 @@ function usage () {
 	echo "       -a              Automatically detect and build all targets." >&2
 	echo "       -o OUT_PATH     Path to the firmware output directory. Default: ${gluon_out}" >&2
 	echo "       -s SIGNATURE    Sign firmware with signature" >&2
+	echo "       -stable         Set GLUON_AUTOUPDATER_BRANCH=stable" >&2
 	echo "       -b              BROKEN=1" >&2
 	echo "       -v              verbose" >&2
 	echo "       -j JOBS         Run build with -jJOBS. Default: ${proc}" >&2
@@ -38,6 +39,10 @@ while [ $# -gt 0 ]; do
 			;;
 		-s)
 			signature="$2"
+			shift
+			;;
+		-stable)
+			export GLUON_AUTOUPDATER_BRANCH=stable
 			shift
 			;;
 		-b)
@@ -74,11 +79,11 @@ announce FFHH SITE PATH: "$site_path" >&2
 pushd "$site_path"
 # shellcheck source=/dev/null
 . ./build.conf
-[ "${GLUON_BRANCH}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
+[ "${GLUON_AUTOUPDATER_BRANCH:-experimental}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
 export GLUON_RELEASE
-export GLUON_BRANCH
+export GLUON_AUTOUPDATER_BRANCH
 export GLUON_SITEDIR="${site_path}"
-export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_BRANCH}"
+export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_AUTOUPDATER_BRANCH}"
 popd
 
 pushd "${gluon_path}"
@@ -120,7 +125,7 @@ done
 announce Building manifest...
 make manifest
 if [ -n "${signature}" ]; then
-	if [ "$GLUON_BRANCH" == "experimental" ]; then
+	if [ "$GLUON_AUTOUPDATER_BRANCH" == "experimental" ]; then
 		announce Signing...
 		"${gluon_path}/contrib/sign.sh" "${signature}" "${GLUON_OUTPUTDIR}/images/sysupgrade/experimental.manifest"
 	else
