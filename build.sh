@@ -79,12 +79,16 @@ announce FFHH SITE PATH: "$site_path" >&2
 pushd "$site_path"
 # shellcheck source=/dev/null
 . ./build.conf
-[ "${GLUON_AUTOUPDATER_BRANCH:-experimental}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
+GLUON_AUTOUPDATER_BRANCH="${GLUON_AUTOUPDATER_BRANCH:-experimental}"
+[ "${GLUON_AUTOUPDATER_BRANCH}" = "experimental" ] && GLUON_RELEASE="${GLUON_RELEASE}~exp$(date +%Y%m%d)"
 export GLUON_RELEASE
 export GLUON_AUTOUPDATER_BRANCH
 export GLUON_SITEDIR="${site_path}"
 export GLUON_OUTPUTDIR="${gluon_out}/${GLUON_RELEASE}/${GLUON_AUTOUPDATER_BRANCH}"
 popd
+
+announce GLUON Variables:
+env | egrep '^GLUON' | sort
 
 pushd "${gluon_path}"
 announce Starting make update...
