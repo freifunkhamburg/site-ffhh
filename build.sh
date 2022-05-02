@@ -43,7 +43,6 @@ while [ $# -gt 0 ]; do
 			;;
 		-stable)
 			export GLUON_AUTOUPDATER_BRANCH=stable
-			shift
 			;;
 		-b)
 			export BROKEN=1
