@@ -8,7 +8,6 @@ GLUON_SITE_PACKAGES := \
 	-gluon-config-mode-contact-info \
 	gluon-ebtables-source-filter \
 	gluon-web-mesh-vpn-fastd \
-	iptables \
 	iwinfo
 
 GLUON_FEATURES := \
